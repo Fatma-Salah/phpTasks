@@ -5,21 +5,22 @@ if ($_POST) {
   $number1 = $_POST["num1"];
   $number2 = $_POST["num2"];
   $number3 = $_POST["num3"];
-  // if(($number1 == $number2) || ($number1 == $number3)|| ($number2 == $number3)|| ( ($number1 == $number2) && ($number3 == $number2)){
 
+ if ($number1 <= $number2 && $number1 <= $number3) {
+    $resultMin = $number1;
+  } elseif ($number2 <= $number1 && $number2 <= $number3) {
+    $resultMin = $number2;
+  } else {
+    $resultMin = $number3;
+    
+  } 
   if (($number1 >= $number2) && ($number1 >= $number3)) {
     $resultMax = $number1;
   } elseif ($number2 >= $number1 && $number2 >= $number3) {
     $resultMax = $number2;
   } elseif ($number3 >= $number2 && $number3 >= $number1) {
     $resultMax = $number3;
-  } elseif ($number1 <= $number2 && $number1 <= $number3) {
-    $resultMin = $number1;
-  } elseif ($number2 <= $number1 && $number2 <= $number3) {
-    $resultMin = $number2;
-  } else {
-    $resultMin = $number3;
-  }
+  } 
 }
 ?>
 
@@ -57,9 +58,9 @@ if ($_POST) {
           </div>
         </form>
         <?php
-        if (isset($resultMax, $resultMin)) {
+        if (isset($resultMax,$resultMin)) {
           echo "  <div class='alert alert-success'> Maximum namber is : $resultMax <br>";
-          echo 'Minimum namber is : ' . $resultMin;
+          echo 'Minimum namber is : ' .$resultMin;
         }
 
         ?>
