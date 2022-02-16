@@ -13,7 +13,8 @@
       <?php
       
       if ($_POST) {
-        
+      
+
         $errors = [];
         if (empty($_POST['user'])) {
             $errors['user'] =  "<div class='alert alert-danger'>User name is required </div>";
@@ -24,17 +25,13 @@
         }
         if (empty($_POST['city'])) {
             $errors['city'] =  "<div class='alert alert-danger'> city is Required </div>";
-        } if (empty($errors)) { 
+        }
+    } ?>
 
-
-        
-         }}
-      ?>
-
-  <form method="post" class="w-50 mt-5 mx-auto ">
-      <div class="form-group">
+  <form method="post"  class="w-50 mt-5 mx-auto ">
+      <div class="form-group"  >
        <label class="m-2 text-danger" for="">User name</label>
-        <input  type="text" name="user"  value="<?php if (isset($_POST['user'])) {echo $_POST['user']; } ?>" id="" class="form-control" placeholder="" aria-describedby="helpId">
+        <input  type="username" name="user"  value="<?php if (isset($_POST['user'])) {echo $_POST['user']; } ?>" id="" class="form-control" placeholder="" aria-describedby="helpId">
         <?php
             if (!empty($errors['user'])) {
                 echo $errors['user'];
@@ -48,24 +45,27 @@
             } ?>
         
         <label class="m-2 text-danger" for="">city</label><br>
-        <select name="city" class="col-6>
+        <select name="city" class="col-12">
         <option  value="Cairo" >Cairo</option> 
         <option  value="Giza" >Giza</option>
-        <option  value="<Alex" >Alex</option>
+        <option  value="Alex" >Alex</option>
         <option  value="Other" >Other</option> 
           
     </select> 
     <?php
+  
             if (!empty($errors['city'])) {
                 echo $errors['city'];
             } ?>
       </div>
-      <div class="m-auto col-3 form-group">
-            <button class="btn btn-outline-danger "> Enter product </button>
+      <div class="  form-group">
+            <button class="btn btn-outline-danger col-12 mx-auto"> Enter product </button>
         </div>
   </form>    
 
-<?php if (empty($errors)) { ?>
+<?php 
+  if($_POST){
+if (empty($errors)) { ?>
 <form action="" method="post">
 
 <table class="table">
@@ -80,8 +80,8 @@
     <tbody>
         <?php
     for($_POST['num'] ; $_POST['num']>0 ;$_POST['num']--) { ;?>
-    <tr>
-            <td ><input type="text" name="product" value=" <?php if (isset($_POST['product'])) {echo $_POST['product']; } ?>"> </td>
+    <tr >
+            <td  ><input type="text" name="product" value=" <?php if (isset($_POST['product'])) {echo $_POST['product']; } ?>"> </td>
             <?php
             if (!empty($errors['product'])) {
                 echo $errors['product'];
@@ -91,10 +91,10 @@
             if (!empty($errors['price'])) {
                 echo $errors['price'];
             } ?>
-            <td ><input type="number" name="qantity" value=" <?php if (isset($_POST['pqantity'])) {echo $_POST['qantity']; } ?>"> </td>
+            <td ><input type="number" name="quantity" value=" <?php if (isset($_POST['pqantity'])) {echo $_POST['qantity']; } ?>"> </td>
             <?php
-            if (!empty($errors['qantity'])) {
-                echo $errors['qantity'];
+            if (!empty($errors['quantity'])) {
+                echo $errors['quantity'];
             } ?>
         </tr>
    <?php } ?> 
@@ -105,7 +105,87 @@
         </div>
 </form>
 
-<?php } ?>
+<?php } 
+$error = [];
+if (empty($_POST['product'])) {
+    $error['product'] =  "<div class='alert alert-danger'>Product is required </div>";
+}
+
+if (empty($_POST['price'])) {
+    $error['price'] =  "<div class='alert alert-danger'> Price is required </div>";
+}
+if (empty($_POST['quantity'])) {
+    $error['quantity'] =  "<div class='alert alert-danger'> Quantity is Required </div>";
+}
+if(empty($error)  ){?>
+
+<table class="table">
+<thead>
+
+        <tr>
+            <th >Product Name </th>
+            <th> Price </th>
+            <th> Quantities</th>
+            <th>Sub Total</th>
+        </tr>
+         
+        <tr>
+            <td><?= $_POST['product']?></td>
+            <td><?= $_POST['price']?></td> 
+            <td> <?= $_POST['quantity']?> </td>
+             <td><?= $_POST['price'] *$_POST['price'] * $_POST['quantity']?></td>
+           
+           
+        </tr>
+       
+    </thead>
+    <tbody>
+        <tr>
+            <td class="col-6">Client name </td>
+            <td class="col-6"><?= $_POST['user'] ?></td>
+        </tr>
+        <tr>
+            <td class="col-6">City</td>
+            <td class="col-6"><?= $_POST['user'] ?></td>
+        </tr>
+        <tr>
+            <td class="col-6">Total</td> 
+            <td class="col-6">
+                <?php
+                    if(!empty( $_POST['price'])){
+                        
+                            $_POST['price']*=$_POST['price'];
+                       
+                    }
+            
+            
+                    
+
+?>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-6">Discount</td>
+            <td class="col-6"></td>
+        </tr>
+        <tr>
+            <td class="col-6"> Total after discount</td>
+            <td class="col-6"></td>
+        </tr>
+        <tr>
+            <td class="col-6">Delivery</td>
+            <td class="col-6"></td>
+        </tr>
+        <tr>
+            <td class="col-6">Total price</td>
+            <td class="col-6"></td>
+        </tr>
+        
+    </tbody>
+</table>
+
+<?php }
+}?>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
