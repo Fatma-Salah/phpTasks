@@ -1,3 +1,40 @@
+<?php
+      
+      if ($_POST) {
+      
+        
+        $errors = [];
+        if (empty($_POST['user'])) {
+            $errors['user'] =  "<div class='alert alert-danger'>User name is required </div>";
+        }
+
+        if (empty($_POST['num'])) {
+            $errors['num'] =  "<div class='alert alert-danger'> Number of varieties is required </div>";
+        }
+        if (empty($_POST['city'])) {
+            $errors['city'] =  "<div class='alert alert-danger'> city is Required </div>";             
+            }
+            if(empty($errors) && isset($_POST['receiptButton'])){
+                $error=[];
+              if (empty($_POST['product'])) {
+                  $error['product'] =  "<div class='alert alert-danger'>Product is required </div>";
+              }
+              
+              if (empty($_POST['price'])) {
+                  $error['price'] =  "<div class='alert alert-danger'> Price is required </div>";
+              }
+              if (empty($_POST['quantity'])) {
+                  $error['quantity'] =  "<div class='alert alert-danger'> Quantity is Required </div>";
+              }
+                
+             }
+       
+      
+         
+          
+    } ?>
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -10,24 +47,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
-      <?php
-      
-      if ($_POST) {
-      
-
-        $errors = [];
-        if (empty($_POST['user'])) {
-            $errors['user'] =  "<div class='alert alert-danger'>User name is required </div>";
-        }
-
-        if (empty($_POST['num'])) {
-            $errors['num'] =  "<div class='alert alert-danger'> Number of varieties is required </div>";
-        }
-        if (empty($_POST['city'])) {
-            $errors['city'] =  "<div class='alert alert-danger'> city is Required </div>";
-        }
-    } ?>
-
+    
   <form method="post"  class="w-50 mt-5 mx-auto ">
       <div class="form-group"  >
        <label class="m-2 text-danger" for="">User name</label>
@@ -44,12 +64,12 @@
                 echo $errors['num'];
             } ?>
         
-        <label class="m-2 text-danger" for="">city</label><br>
-        <select name="city" class="col-12">
-        <option  value="Cairo" >Cairo</option> 
-        <option  value="Giza" >Giza</option>
-        <option  value="Alex" >Alex</option>
-        <option  value="Other" >Other</option> 
+        <label class="m-2 text-danger" >City</label><br>
+        <select name="city"  class="col-12">
+        <option  value="<?php if (isset($_POST['city'])) {echo $_POST['city']; } ?>" >Cairo</option> 
+        <option  value="<?php if (isset($_POST['city'])) {echo $_POST['city']; } ?>" >Giza</option>
+        <option  value="<?php if (isset($_POST['city'])) {echo $_POST['city']; } ?>" >Alex</option>
+        <option  value="<?php if (isset($_POST['city'])) {echo $_POST['city']; } ?>" >Other</option> 
           
     </select> 
     <?php
@@ -59,13 +79,13 @@
             } ?>
       </div>
       <div class="  form-group">
-            <button class="btn btn-outline-danger col-12 mx-auto"> Enter product </button>
+            <button class="btn btn-outline-danger col-12 mx-auto" name="productButton"> Enter product </button>
         </div>
   </form>    
-
+ 
 <?php 
-  if($_POST){
-if (empty($errors)) { ?>
+     if(isset ($_POST['productButton'])){
+ ?>
 <form action="" method="post">
 
 <table class="table">
@@ -79,45 +99,41 @@ if (empty($errors)) { ?>
     </thead>
     <tbody>
         <?php
+        
     for($_POST['num'] ; $_POST['num']>0 ;$_POST['num']--) { ;?>
     <tr >
             <td  ><input type="text" name="product" value=" <?php if (isset($_POST['product'])) {echo $_POST['product']; } ?>"> </td>
             <?php
-            if (!empty($errors['product'])) {
-                echo $errors['product'];
+            if (!empty($error['product'])) {
+                echo $error['product'];
             } ?>
             <td ><input type="number" name="price" value=" <?php if (isset($_POST['price'])) {echo $_POST['price']; } ?>"> </td>
             <?php
-            if (!empty($errors['price'])) {
-                echo $errors['price'];
+            if (!empty($error['price'])) {
+                echo $error['price'];
             } ?>
             <td ><input type="number" name="quantity" value=" <?php if (isset($_POST['pqantity'])) {echo $_POST['qantity']; } ?>"> </td>
             <?php
-            if (!empty($errors['quantity'])) {
-                echo $errors['quantity'];
+            if (!empty($error['quantity'])) {
+                echo $error['quantity'];
             } ?>
         </tr>
+       
+             
+            
    <?php } ?> 
     </tbody>
 </table>
 <div class="m-auto col-3 form-group">
-            <button class="btn btn-outline-danger "> Receipt </button>
+            <button class="btn btn-outline-danger " name="receiptButton"> Receipt </button>
         </div>
 </form>
 
 <?php } 
-$error = [];
-if (empty($_POST['product'])) {
-    $error['product'] =  "<div class='alert alert-danger'>Product is required </div>";
-}
-
-if (empty($_POST['price'])) {
-    $error['price'] =  "<div class='alert alert-danger'> Price is required </div>";
-}
-if (empty($_POST['quantity'])) {
-    $error['quantity'] =  "<div class='alert alert-danger'> Quantity is Required </div>";
-}
-if(empty($error)  ){?>
+ if(empty($error)){
+if(isset($_POST['receiptButton'])){
+   
+?>
 
 <table class="table">
 <thead>
@@ -185,7 +201,7 @@ if(empty($error)  ){?>
 </table>
 
 <?php }
-}?>
+}?> 
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
